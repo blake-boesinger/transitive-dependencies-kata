@@ -17,8 +17,18 @@ class Dependencies {
   }
 
 
+  def directDependenciesFor( i : Int ) = {
+    deps.get(i).getOrElse(List())
+
+  }
+
+
   def dependencies_for(i: Int) : List[Int] = {
-      return  deps.get(i).get
+      val direct = directDependenciesFor(i)
+    return direct.map(  y =>   y ::     dependencies_for(y)     ).flatten.distinct.sortWith( (x, y) => x < y)
+
+
+
 
 
   }
